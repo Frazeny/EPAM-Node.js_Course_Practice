@@ -1,0 +1,19 @@
+{
+  "name": "epam-node.js_course_practice",
+  "version": "1.0.0",
+  "description": "epam node course",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Frazeny/EPAM-Node.js_Course_Practice.git"
+  },
+  "author": "Vitalii Borshchov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Frazeny/EPAM-Node.js_Course_Practice/issues"
+  },
+  "homepage": "https://github.com/Frazeny/EPAM-Node.js_Course_Practice#readme"
+}
