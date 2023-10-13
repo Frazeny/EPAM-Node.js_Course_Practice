@@ -2,10 +2,10 @@
   "name": "epam-node.js_course_practice",
   "version": "1.0.0",
   "description": "epam node course",
-  "main": "main.js",
+  "main": "src/main.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon main.js"
+    "start": "nodemon src/main.js"
   },
   "repository": {
     "type": "git",
