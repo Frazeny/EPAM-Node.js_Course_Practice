@@ -3,6 +3,7 @@ class HealthCheckService {
         return {
             status: 'OK',
             uptime: process.uptime(),
+            pid: process.pid
         }
     }
 }
