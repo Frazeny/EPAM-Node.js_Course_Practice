@@ -1,6 +1,6 @@
-import {Router} from "express";
-import healthRouter from "./health-check/health-check.route.js";
-import moviesRouter from "./movies/movies.route.js";
+import { Router } from 'express';
+import healthRouter from './health-check/health-check.route.js';
+import moviesRouter from './movies/movies.route.js';
 
 const rootRouter = new Router();
 

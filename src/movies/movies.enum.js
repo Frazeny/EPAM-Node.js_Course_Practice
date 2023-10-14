@@ -1,4 +1,4 @@
 export const ROUTES = {
-    ROOT: '/',
-    MOVIE: '/:id'
-}
+  ROOT: '/',
+  MOVIE: '/:id',
+};
