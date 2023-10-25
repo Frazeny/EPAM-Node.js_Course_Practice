@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
-import { ROUTES } from './health-check.enum.js';
-import { getHealthCheckStatus } from './health-check.controller.js';
+import { ROUTES } from './health-check.enum';
+import { getHealthCheckStatus } from './health-check.controller';
 
-const healthRouter = new Router();
+const healthRouter = Router();
 
 healthRouter.route(ROUTES.ROOT).get(getHealthCheckStatus);
 

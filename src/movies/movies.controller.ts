@@ -1,4 +1,6 @@
-import MoviesService from './movies.service.js';
+import {Request, Response, NextFunction, RequestHandler} from "express";
+
+import MoviesService from './movies.service';
 
 /**
  * @openapi
@@ -43,7 +45,7 @@ import MoviesService from './movies.service.js';
  *                  genre: ["Adventures", "Action", "Fantasy", "Dramas"]
  *
  */
-export const getAllMovies = async (req, res, next) => {
+export const getAllMovies: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const movies = await MoviesService.getAllMovies();
     res.json(movies);
@@ -115,7 +117,7 @@ export const getAllMovies = async (req, res, next) => {
  *               message: "Internal Server Error"
  *
  */
-export const getMovie = async (req, res, next) => {
+export const getMovie: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const movie = await MoviesService.getMovie(req.params.id);
     res.json(movie);

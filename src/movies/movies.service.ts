@@ -1,6 +1,8 @@
-import BadRequest from '../errors/bad-request.js';
+import BadRequest from '../errors/bad-request';
+import {IMovie} from "../health-check/health-check.interface";
 
 class MoviesService {
+  private movies: IMovie[];
   constructor() {
     this.movies = [
       {
@@ -20,27 +22,27 @@ class MoviesService {
     ];
   }
 
-  getAllMovies() {
+  getAllMovies(): Promise<IMovie[]> {
     return new Promise((resolve) => {
       // Simulate an asynchronous operation, e.g., fetching movies from a db.
       setTimeout(() => {
-        const response = this.movies;
+        const response: IMovie[] = this.movies;
         resolve(response);
       }, 1000);
     });
   }
 
-  async getMovie(id) {
+  async getMovie(id: string): Promise<IMovie> {
     if (!id) {
       throw new BadRequest('id is not specified');
     }
-    const result = this.movies.find((movie) => movie.__id === id);
+    const result: IMovie | undefined = this.movies.find((movie) => movie.__id === id);
     if (!result) {
       throw new BadRequest(`Movie with id:${id} was not found :(`);
     }
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(result);
+        resolve(result as IMovie);
       }, 1000);
     });
   }

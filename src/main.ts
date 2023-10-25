@@ -1,12 +1,12 @@
-import express from 'express';
+import express, {Express} from 'express'
 import swaggerUi from 'swagger-ui-express';
-import { errorHandlerMiddleware } from './middleware/error-handler.js';
-import { notFoundMiddleware } from './middleware/not-found.js';
-import { swaggerSpec } from './swagger/swagger.js';
-import rootRouter from './rootRoutes.js';
+import { errorHandlerMiddleware } from './middleware/error-handler';
+import { notFoundMiddleware } from './middleware/not-found';
+import { swaggerSpec } from './swagger/swagger';
+import rootRouter from './rootRoutes';
 
 const PORT = process.env.PORT || 3000;
-const app = new express();
+const app: Express = express();
 
 // routes
 app.use('/', rootRouter);

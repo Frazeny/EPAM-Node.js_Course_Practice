@@ -1,4 +1,4 @@
-export const ROUTES = {
-  ROOT: '/',
-  MOVIE: '/:id',
+export enum ROUTES  {
+  ROOT = '/',
+  MOVIE = '/:id',
 };

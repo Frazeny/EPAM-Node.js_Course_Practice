@@ -4,7 +4,9 @@
   "description": "epam node course",
   "main": "src/main.ts",
   "scripts": {
-    "start": "nodemon src/main.ts",
+    "build": "rimraf ./build && tsc",
+    "start": "npm run build && node build/main.js",
+    "start:dev": "npx nodemon",
     "lint": "npx eslint src/** --fix"
   },
   "repository": {
