@@ -8,6 +8,6 @@ const options = {
       version: '1.0.0'
     }
   },
-  apis: ['./src/*/*.controller.js']
+  apis: ['./src/*/*.controller.ts']
 }
 export const swaggerSpec = swaggerJSDoc(options)
