@@ -1,8 +1,5 @@
-export interface IMovie {
-    __id: string;
-    title: string;
-    description: string;
-    releaseDate: Date;
-    genre: string[];
-
+export interface IHealthStatus {
+  status: string
+  uptime: number
+  pid: number
 }

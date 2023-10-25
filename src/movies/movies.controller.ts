@@ -1,6 +1,6 @@
-import {Request, Response, NextFunction, RequestHandler} from "express";
+import { type Request, type Response, type NextFunction, type RequestHandler } from 'express'
 
-import MoviesService from './movies.service';
+import MoviesService from './movies.service'
 
 /**
  * @openapi
@@ -47,12 +47,12 @@ import MoviesService from './movies.service';
  */
 export const getAllMovies: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const movies = await MoviesService.getAllMovies();
-    res.json(movies);
+    const movies = await MoviesService.getAllMovies()
+    res.json(movies)
   } catch (e) {
-    next(e);
+    next(e)
   }
-};
+}
 /**
  * @openapi
  * /movies/{id}:
@@ -119,9 +119,9 @@ export const getAllMovies: RequestHandler = async (req: Request, res: Response, 
  */
 export const getMovie: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const movie = await MoviesService.getMovie(req.params.id);
-    res.json(movie);
+    const movie = await MoviesService.getMovie(req.params.id)
+    res.json(movie)
   } catch (e) {
-    next(e);
+    next(e)
   }
-};
+}

@@ -1,3 +1,3 @@
 export enum ROUTES {
-  ROOT= '/',
+  ROOT = '/',
 };

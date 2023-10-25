@@ -7,7 +7,7 @@
     "build": "rimraf ./build && tsc",
     "start": "npm run build && node build/main.js",
     "start:dev": "npx nodemon",
-    "lint": "npx eslint src/** --fix"
+    "lint": "npx eslint --ext .ts src/** --fix"
   },
   "repository": {
     "type": "git",

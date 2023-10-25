@@ -1,32 +1,32 @@
-import express, {Express} from 'express'
-import swaggerUi from 'swagger-ui-express';
-import { errorHandlerMiddleware } from './middleware/error-handler';
-import { notFoundMiddleware } from './middleware/not-found';
-import { swaggerSpec } from './swagger/swagger';
-import rootRouter from './rootRoutes';
+import express, { type Express } from 'express'
+import swaggerUi from 'swagger-ui-express'
+import { errorHandlerMiddleware } from './middleware/error-handler'
+import { notFoundMiddleware } from './middleware/not-found'
+import { swaggerSpec } from './swagger/swagger'
+import rootRouter from './rootRoutes'
 
-const PORT = process.env.PORT || 3000;
-const app: Express = express();
+const PORT = process.env.PORT ?? 3000
+const app: Express = express()
 
 // routes
-app.use('/', rootRouter);
+app.use('/', rootRouter)
 
 // Serve Swagger documentation
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 // middleware
-app.use(notFoundMiddleware);
-app.use(errorHandlerMiddleware);
+app.use(notFoundMiddleware)
+app.use(errorHandlerMiddleware)
 
-const start = async () => {
+const start = async (): Promise<void> => {
   try {
     app.listen(PORT, () => {
       console.info(`Server in listening on port ${PORT}\
-            \npid: ${process.pid}`);
-    });
+            \npid: ${process.pid}`)
+    })
   } catch (e) {
-    console.error(e);
+    console.error(e)
   }
-};
+}
 
-start();
+void start()

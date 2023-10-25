@@ -1,6 +1,6 @@
-import {Request, Response} from "express";
+import { type Request, type RequestHandler, type Response } from 'express'
 
-import HealthCheckService from './health-check.service';
+import HealthCheckService from './health-check.service'
 
 /**
  * @openapi
@@ -27,11 +27,14 @@ import HealthCheckService from './health-check.service';
  *               uptime: 1234.567
  *               pid: 12345
  */
-export const getHealthCheckStatus = (req: Request, res: Response) => {
+export const getHealthCheckStatus: RequestHandler = (
+  req: Request,
+  res: Response
+) => {
   try {
-    const status = HealthCheckService.getStatus();
-    res.status(200).json(status);
+    const status = HealthCheckService.getStatus()
+    res.status(200).json(status)
   } catch (e) {
-    res.status(500).json(e);
+    res.status(500).json(e)
   }
-};
+}

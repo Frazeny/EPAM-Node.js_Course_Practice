@@ -1,11 +1,13 @@
+import { type IHealthStatus } from './health-check.interface'
+
 class HealthCheckService {
-  getStatus() {
+  getStatus (): IHealthStatus {
     return {
       status: 'OK',
       uptime: process.uptime(),
-      pid: process.pid,
-    };
+      pid: process.pid
+    }
   }
 }
 
-export default new HealthCheckService();
+export default new HealthCheckService()

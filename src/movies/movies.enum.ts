@@ -1,4 +1,4 @@
-export enum ROUTES  {
+export enum ROUTES {
   ROOT = '/',
   MOVIE = '/:id',
 };
