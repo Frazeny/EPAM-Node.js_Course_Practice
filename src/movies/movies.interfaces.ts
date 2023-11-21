@@ -1,11 +1,11 @@
-export interface IMovieParamsRequest {
-  id: string
-}
+import { type Document, type Schema } from 'mongoose'
 
-export interface IMovie {
-  __id: string
+export interface IMovie extends Document {
   title: string
   description: string
   releaseDate: Date
-  genre: string[]
+  genres: Schema.Types.ObjectId[]
+}
+export interface IGenre extends Document {
+  name: string
 }
