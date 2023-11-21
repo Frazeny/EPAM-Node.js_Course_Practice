@@ -1,6 +1,7 @@
 import { type Request, type Response, type NextFunction, type RequestHandler } from 'express'
 
 import MoviesService from './movies.service'
+import { type IGenre, type IMovie } from './movies.interfaces'
 
 /**
  * @openapi
@@ -120,6 +121,79 @@ export const getAllMovies: RequestHandler = async (req: Request, res: Response, 
 export const getMovie: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const movie = await MoviesService.getMovie(req.params.id)
+    res.json(movie)
+  } catch (e) {
+    next(e)
+  }
+}
+
+export const postMovie: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const newMovie: IMovie = await MoviesService.createNewMovie(req.body.movie)
+    res.status(201).json(newMovie)
+  } catch (e) {
+    next(e)
+  }
+}
+
+export const updateMovie: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const updatedMovie: IMovie = await MoviesService.updateMovie(req.params.id, req.body.movie)
+    console.log(updatedMovie)
+    res.status(200).json(updatedMovie)
+  } catch (e) {
+    console.error('Error updating movie:', e)
+    next(e)
+  }
+}
+
+export const deleteMovie: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const movie = await MoviesService.deleteMovie(req.params.id)
+    res.json(movie)
+  } catch (e) {
+    next(e)
+  }
+}
+
+export const getGenres: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const genres: IGenre[] = await MoviesService.getAllGenres()
+    res.json(genres)
+  } catch (e) {
+    next(e)
+  }
+}
+
+export const getMoviesByGenre: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const genre = await MoviesService.getMoviesByGenre(req.params.id)
+    res.json(genre)
+  } catch (e) {
+    next(e)
+  }
+}
+
+export const postGenre: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const createdGenre: IGenre = await MoviesService.createNewGenre(req.body.genre)
+    res.status(201).json(createdGenre)
+  } catch (e) {
+    next(e)
+  }
+}
+
+export const updateGenre: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const updatedGenre: IGenre = await MoviesService.updateGenre(req.params.id, req.body.genre)
+    res.status(200).json(updatedGenre)
+  } catch (e) {
+    next(e)
+  }
+}
+export const deleteGenre: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const movie: IGenre = await MoviesService.deleteGenre(req.params.id)
     res.json(movie)
   } catch (e) {
     next(e)
