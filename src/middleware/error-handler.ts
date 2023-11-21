@@ -7,7 +7,6 @@ export const errorHandlerMiddleware: ErrorRequestHandler = (err: Error, req: Req
     return (res.status(err.statusCode).json({ message: err.message }))
   }
   if (err instanceof MongooseError.ValidationError) {
-    // Handle validation errors
     const validationErrors = Object.values(err.errors).map((error) => ({
       path: error.path,
       message: error.message,

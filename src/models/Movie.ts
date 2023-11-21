@@ -10,9 +10,7 @@ interface IMovie extends Document {
 }
 
 const validateGenreId = async (genre: Schema.Types.ObjectId): Promise<boolean> => {
-  // Check if all genre IDs are valid
   const genreId: IGenre | null = await Genre.findById(genre)
-  // const invalidGenreIds: IGenre[] = await Genre.findById({ $in: genres } )
 
   return genreId !== null
 }
