@@ -353,6 +353,32 @@ export const deleteMovie: RequestHandler = async (req: Request, res: Response, n
   }
 }
 
+/**
+ * @openapi
+ * /genres:
+ *   get:
+ *     summary: Get all genres
+ *     responses:
+ *       '200':
+ *         description: Genres retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Genre'
+ *       '500':
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *               example:
+ *                 message: "Something went wrong, please try again"
+ */
 export const getGenres: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const genres: IGenre[] = await MoviesService.getAllGenres()
@@ -362,6 +388,68 @@ export const getGenres: RequestHandler = async (req: Request, res: Response, nex
   }
 }
 
+/**
+ * @openapi
+ * /movies/genre/{genreName}:
+ *   parameters:
+ *     - name: genreName
+ *       in: path
+ *       description: Name of the genre
+ *       required: true
+ *       schema:
+ *         type: string
+ *   get:
+ *     summary: Get movies by genre
+ *     parameters:
+ *       - name: genreName
+ *         in: path
+ *         description: Name of the genre
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Movies retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Movie'
+ *       '400':
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *               example:
+ *                 message: "Genre is not specified"
+ *       '404':
+ *         description: Genre Not Found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *               example:
+ *                 message: "Genre with name: Action was not found :("
+ *       '500':
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *               example:
+ *                 message: "Something went wrong, please try again"
+ */
 export const getMoviesByGenre: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const genre = await MoviesService.getMoviesByGenre(req.params.id)
@@ -371,6 +459,47 @@ export const getMoviesByGenre: RequestHandler = async (req: Request, res: Respon
   }
 }
 
+/**
+ * @openapi
+ * /genres:
+ *   post:
+ *     summary: Create a new genre
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/GenreRequest'
+ *     responses:
+ *       '201':
+ *         description: Genre created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Genre'
+ *       '400':
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *               example:
+ *                 message: "Genre with name: 'Action' already exists"
+ *       '500':
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *               example:
+ *                 message: "Something went wrong, please try again"
+ */
 export const postGenre: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const createdGenre: IGenre = await MoviesService.createNewGenre(req.body.genre)
@@ -380,6 +509,61 @@ export const postGenre: RequestHandler = async (req: Request, res: Response, nex
   }
 }
 
+/**
+ * @openapi
+ * /genres/{id}:
+ *   parameters:
+ *     - name: id
+ *       in: path
+ *       description: ID of the genre
+ *       required: true
+ *       schema:
+ *         type: string
+ *   put:
+ *     summary: Update a genre by ID
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID of the genre to update
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Genre'
+ *     responses:
+ *       '200':
+ *         description: Genre updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Genre'
+ *       '400':
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *               example:
+ *                 message: "Genre with id:123123 was not found :("
+ *       '500':
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *               example:
+ *                 message: "Something went wrong, please try again"
+ */
 export const updateGenre: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const updatedGenre: IGenre = await MoviesService.updateGenre(req.params.id, req.body.genre)
@@ -388,6 +572,56 @@ export const updateGenre: RequestHandler = async (req: Request, res: Response, n
     next(e)
   }
 }
+
+/**
+ * @openapi
+ * /genres/{id}:
+ *   parameters:
+ *     - name: id
+ *       in: path
+ *       description: ID of the genre
+ *       required: true
+ *       schema:
+ *         type: string
+ *   delete:
+ *     summary: Delete a genre by ID
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID of the genre to delete
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Genre deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Genre'
+ *       '400':
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *               example:
+ *                 message: "Genre with id:123123 was not found :("
+ *       '500':
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *               example:
+ *                 message: "Something went wrong, please try again"
+ */
 export const deleteGenre: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const movie: IGenre = await MoviesService.deleteGenre(req.params.id)
