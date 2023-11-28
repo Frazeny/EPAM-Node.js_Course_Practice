@@ -23,10 +23,11 @@ app.use(errorHandlerMiddleware)
 
 const start = async (): Promise<void> => {
   try {
-    await connectDB(
-      process.env.MONGO_URL ??
-        'mongodb+srv://vitaliivborshchov:12345@epam-nodejs-course-prac.gxfdvhd.mongodb.net/MoviesDB?retryWrites=true&w=majority'
-    )
+    const MONGO_URL = process.env.MONGO_URL
+    if (!MONGO_URL) {
+      throw new Error('MONGO_URL is not defined in the environment variables')
+    }
+    await connectDB(MONGO_URL)
     app.listen(PORT, () => {
       console.info(`Server in listening on port ${PORT}\
             \npid: ${process.pid}`)
