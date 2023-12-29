@@ -68,10 +68,7 @@ class MoviesService {
       throw new BadRequest(`Genre with name: ${genreName} was not found :(`)
     }
 
-    const filteredMovies: IMovieDocument[] | null = await Movies.find({ genres: { $in: [genre._id] } })
-    if (!filteredMovies) {
-      throw new BadRequest(`Movies with genre: ${genreName} was not found :( ${genre.name}`)
-    }
+    const filteredMovies: IMovieDocument[] = await Movies.find({ genres: { $in: [genre._id] } })
     return filteredMovies
   }
 
