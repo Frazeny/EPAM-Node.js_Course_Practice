@@ -1,13 +1,6 @@
-import { type Document, Schema, model } from 'mongoose'
+import { Schema, model } from 'mongoose'
 import { Genre } from './Genre'
-import { type IGenre } from '../movies/movies.interfaces'
-
-interface IMovie extends Document {
-  title: string
-  description: string
-  releaseDate: Date
-  genres: Schema.Types.ObjectId[]
-}
+import { type IGenre, type IMovie } from '../movies/movies.interfaces'
 
 const validateGenreId = async (genre: Schema.Types.ObjectId): Promise<boolean> => {
   const genreId: IGenre | null = await Genre.findById(genre)
