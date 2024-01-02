@@ -29,7 +29,6 @@ const movieIdMock = movieMock._id
 describe('MoviesController controller', () => {
   afterEach(() => {
     jest.clearAllMocks()
-    jest.resetAllMocks()
   })
 
   const movieReqMock = {} as unknown as Request
@@ -240,6 +239,7 @@ describe('MoviesController controller', () => {
 
   describe('updateGenre', () => {
     const genreReqMock = { params: { id: genreIdMock }, body: { genre: genresMock[0] } } as unknown as Request
+
     it('should update a genre by ID with status code 200', async () => {
       mockedService.updateGenre.mockResolvedValue(genresMock[0])
 
@@ -263,6 +263,7 @@ describe('MoviesController controller', () => {
 
   describe('deleteGenre', () => {
     const genreReqMock = { params: { id: genreIdMock } } as unknown as Request
+
     it('should delete a genre by ID with status code 200', async () => {
       mockedService.deleteGenre.mockResolvedValue(genresMock[0])
 
