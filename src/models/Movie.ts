@@ -1,9 +1,9 @@
 import { Schema, model } from 'mongoose'
 import { Genre } from './Genre'
-import { type IGenre, type IMovie } from '../movies/movies.interfaces'
+import { type IGenreDocument, type IMovie } from '../movies/movies.interfaces'
 
 const validateGenreId = async (genre: Schema.Types.ObjectId): Promise<boolean> => {
-  const genreId: IGenre | null = await Genre.findById(genre)
+  const genreId: IGenreDocument | null = await Genre.findById(genre)
 
   return genreId !== null
 }
