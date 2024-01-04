@@ -291,7 +291,7 @@ export const updateMovie: RequestHandler = async (req: Request, res: Response, n
   try {
     const updatedMovie: IMovie = await MoviesService.updateMovie(req.params.id, req.body.movie)
     console.log(updatedMovie)
-    res.status(200).json(updatedMovie)
+    res.json(updatedMovie)
   } catch (e) {
     console.error('Error updating movie:', e)
     next(e)

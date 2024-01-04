@@ -1,8 +1,5 @@
-import { type Document, Schema, model } from 'mongoose'
-
-interface IGenre extends Document {
-  name: string
-}
+import { Schema, model } from 'mongoose'
+import { type IGenre } from '../movies/movies.interfaces'
 
 const genreSchema = new Schema<IGenre>({
   name: {
