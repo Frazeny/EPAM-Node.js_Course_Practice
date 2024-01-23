@@ -1,39 +1,39 @@
 import BadRequest from '../errors/bad-request'
-import { type IGenre, type IMovie } from './movies.interfaces'
+import { type IGenre, type IGenreDocument, type IMovie, type IMovieDocument } from './movies.interfaces'
 import { Movies } from '../models/Movie'
 import { Genre } from '../models/Genre'
 
 class MoviesService {
-  async getAllMovies (): Promise<IMovie[]> {
-    const movies: IMovie[] = await Movies.find().populate('genres')
+  async getAllMovies (): Promise<IMovieDocument[]> {
+    const movies: IMovieDocument[] = await Movies.find().populate('genres')
     return movies
   }
 
-  async createNewMovie (movie: IMovie): Promise<IMovie> {
-    const existingMovie: IMovie | null = await Movies.findOne({ name: movie.title })
+  async createNewMovie (movie: IMovie): Promise<IMovieDocument> {
+    const existingMovie: IMovieDocument | null = await Movies.findOne({ name: movie.title })
     if (existingMovie) {
-      throw new BadRequest(`Movie with name: '${movie.title}' already exists with id: ${existingMovie._id}`)
+      throw new BadRequest(`Movie with name: '${movie.title}' already exists with id: ${existingMovie._id.toString()}`)
     }
-    const newMovie: IMovie = await Movies.create(movie)
+    const newMovie: IMovieDocument = await Movies.create(movie)
     return newMovie
   }
 
-  async getMovie (id: string): Promise<IMovie> {
+  async getMovie (id: string): Promise<IMovieDocument> {
     if (!id) {
       throw new BadRequest('id is not specified')
     }
-    const movie: IMovie | null = await Movies.findOne({ _id: id }).populate('genres')
+    const movie: IMovieDocument | null = await Movies.findOne({ _id: id }).populate('genres')
     if (!movie) {
       throw new BadRequest(`Movie with id:${id} was not found :(`)
     }
     return movie
   }
 
-  async updateMovie (id: string, movie: IMovie): Promise<IMovie> {
+  async updateMovie (id: string, movie: IMovie): Promise<IMovieDocument> {
     if (!id) {
       throw new BadRequest('id is not specified')
     }
-    const updatedMovie: IMovie | null = await Movies.findOneAndUpdate({ _id: id }, movie, {
+    const updatedMovie: IMovieDocument | null = await Movies.findOneAndUpdate({ _id: id }, movie, {
       new: true,
       runValidators: true
     }).populate('genres')
@@ -43,52 +43,49 @@ class MoviesService {
     return updatedMovie
   }
 
-  async deleteMovie (id: string): Promise<IMovie> {
+  async deleteMovie (id: string): Promise<IMovieDocument> {
     if (!id) {
       throw new BadRequest('id is not specified')
     }
-    const deletedMovie: IMovie | null = await Movies.findOneAndDelete({ _id: id }).populate('genres')
+    const deletedMovie: IMovieDocument | null = await Movies.findOneAndDelete({ _id: id }).populate('genres')
     if (!deletedMovie) {
       throw new BadRequest(`Movie with id:${id} was not found :(`)
     }
     return deletedMovie
   }
 
-  async getAllGenres (): Promise<IGenre[]> {
-    const genres: IGenre[] = await Genre.find()
+  async getAllGenres (): Promise<IGenreDocument[]> {
+    const genres: IGenreDocument[] = await Genre.find()
     return genres
   }
 
-  async getMoviesByGenre (genreName: string): Promise<IMovie[]> {
+  async getMoviesByGenre (genreName: string): Promise<IMovieDocument[]> {
     if (!genreName) {
       throw new BadRequest('Genre is not specified')
     }
-    const genre: IGenre | null = await Genre.findOne({ name: genreName })
+    const genre: IGenreDocument | null = await Genre.findOne({ name: genreName })
     if (!genre) {
       throw new BadRequest(`Genre with name: ${genreName} was not found :(`)
     }
 
-    const filteredMovies: IMovie[] | null = await Movies.find<IMovie>({ genres: { $in: [genre._id] } })
-    if (!filteredMovies) {
-      throw new BadRequest(`Movies with genre: ${genreName} was not found :( ${genre.name}`)
-    }
+    const filteredMovies: IMovieDocument[] = await Movies.find({ genres: { $in: [genre._id] } })
     return filteredMovies
   }
 
-  async createNewGenre (genre: IGenre): Promise<IGenre> {
-    const existingGenre: IGenre | null = await Genre.findOne({ name: genre.name })
+  async createNewGenre (genre: IGenre): Promise<IGenreDocument> {
+    const existingGenre: IGenreDocument | null = await Genre.findOne({ name: genre.name })
     if (existingGenre) {
       throw new BadRequest(`Genre with name: '${genre.name}' already exists`)
     }
-    const newGenre: IGenre = await Genre.create(genre)
+    const newGenre: IGenreDocument = await Genre.create(genre)
     return newGenre
   }
 
-  async updateGenre (id: string, genre: IGenre): Promise<IGenre> {
+  async updateGenre (id: string, genre: IGenre): Promise<IGenreDocument> {
     if (!id) {
       throw new BadRequest('id is not specified')
     }
-    const updatedGenre: IGenre | null = await Genre.findOneAndUpdate({ _id: id }, genre, {
+    const updatedGenre: IGenreDocument | null = await Genre.findOneAndUpdate({ _id: id }, genre, {
       new: true,
       runValidators: true
     })
@@ -98,11 +95,11 @@ class MoviesService {
     return updatedGenre
   }
 
-  async deleteGenre (id: string): Promise<IGenre> {
+  async deleteGenre (id: string): Promise<IGenreDocument> {
     if (!id) {
       throw new BadRequest('id is not specified')
     }
-    const deletedGenre: IGenre | null = await Genre.findOneAndDelete({ _id: id })
+    const deletedGenre: IGenreDocument | null = await Genre.findOneAndDelete({ _id: id })
     if (!deletedGenre) {
       throw new BadRequest(`Genre with id:${id} was not found :(`)
     }
